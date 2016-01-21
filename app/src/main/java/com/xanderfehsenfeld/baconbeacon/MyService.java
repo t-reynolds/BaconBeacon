@@ -12,7 +12,8 @@ import com.google.android.gms.location.LocationServices;
 
 /* A service to periodically update the location and send to a server */
 
-public class MyService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+//public class MyService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MyService extends Service {
 
     /* location */
     private GoogleApiClient mGoogleApiClient;
@@ -20,10 +21,7 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
 
 
 
-    public MyService() {
-
-
-    }
+    public MyService() {}
 
     /* get the most current location */
     public void updateLocation(){
@@ -41,14 +39,6 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
         return Service.START_NOT_STICKY;
     }
 
-    /* build a googleApiClient */
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder( this )
-                .addConnectionCallbacks( this )
-                .addOnConnectionFailedListener( this )
-                .addApi( LocationServices.API )
-                .build();
-    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -57,19 +47,28 @@ public class MyService extends Service implements GoogleApiClient.ConnectionCall
 
     }
 
-
-    @Override
-    public void onConnected(Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
+//    /* build a googleApiClient */
+//    protected synchronized void buildGoogleApiClient() {
+//        mGoogleApiClient = new GoogleApiClient.Builder( this )
+//                .addConnectionCallbacks( this )
+//                .addOnConnectionFailedListener( this )
+//                .addApi( LocationServices.API )
+//                .build();
+//    }
+//
+//
+//    @Override
+//    public void onConnected(Bundle bundle) {
+//
+//    }
+//
+//    @Override
+//    public void onConnectionSuspended(int i) {
+//
+//    }
+//
+//    @Override
+//    public void onConnectionFailed(ConnectionResult connectionResult) {
+//
+//    }
 }

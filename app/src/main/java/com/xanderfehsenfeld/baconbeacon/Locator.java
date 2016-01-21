@@ -10,6 +10,8 @@ import com.google.android.gms.location.LocationServices;
 
 /**
  * Created by Xander on 1/21/16.
+ *
+ * A class to contain a google api client, which captures the location
  */
 public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -19,6 +21,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
     public Locator( Context context){
         buildGoogleApiClient( context );
         mGoogleApiClient.connect();
+        updateLocation();
 
     }
 
