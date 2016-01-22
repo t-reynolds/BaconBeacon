@@ -1,5 +1,6 @@
 package com.xanderfehsenfeld.baconbeacon;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private boolean bad = false;
+    private String message;
+    private Intent curr_intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,23 +25,46 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        message = getResources().getString(R.string.good_message);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        /* start the service */
+        startService();
 
+
+    }
+
+    public void toggleMessage(View view){
+        if (bad){
+            message = getResources().getString( R.string.good_message);
+            bad = false;
+        } else {
+            message = getResources().getString( R.string.bad_message);
+            bad = true;
+
+        }
+        TextView textView = (TextView) findViewById( R.id.message );
+        textView.setText(message);
+
+        /* stop the previous service */
+        stopService();
+
+        /* start the new service */
+        startService();
+    }
+
+    private void stopService(){
+        getApplicationContext().stopService(curr_intent);
+    }
+    private void startService(){
         // use this to start and trigger a service
         Context context = getApplicationContext();
         Intent i= new Intent(context, MyService.class);
         // potentially add data to the intent
-        i.putExtra("KEY1", "Value to be used by the service");
-        context.startService(i);
+        i.putExtra("KEY1", message );
         //context.bindService(i, new MyServiceConnection(), Context.BIND_ABOVE_CLIENT);
+        context.startService(i);
+
+        curr_intent = i;
 
         /* notes on services
         *       you cant call a method on a service directly, instead you must bind to it
@@ -43,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         *           in order to bind an activity with a service, implement ServiceConnection
          */
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -65,4 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
