@@ -35,7 +35,13 @@ public class MainActivity extends AppCompatActivity {
         // potentially add data to the intent
         i.putExtra("KEY1", "Value to be used by the service");
         context.startService(i);
+        //context.bindService(i, new MyServiceConnection(), Context.BIND_ABOVE_CLIENT);
 
+        /* notes on services
+        *       you cant call a method on a service directly, instead you must bind to it
+        *       Binding
+        *           in order to bind an activity with a service, implement ServiceConnection
+         */
     }
 
     @Override

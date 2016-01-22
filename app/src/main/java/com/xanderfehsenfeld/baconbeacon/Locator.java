@@ -3,6 +3,7 @@ package com.xanderfehsenfeld.baconbeacon;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -17,11 +18,14 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
 
     public Location mLastLocation;
     private GoogleApiClient mGoogleApiClient;
+    private Context context;
 
-    public Locator( Context context){
-        buildGoogleApiClient( context );
+    public Locator( Context _context){
+        buildGoogleApiClient( _context );
+        context = _context;
         mGoogleApiClient.connect();
         updateLocation();
+
 
     }
 
@@ -42,6 +46,7 @@ public class Locator implements GoogleApiClient.ConnectionCallbacks, GoogleApiCl
 
     @Override
     public void onConnected(Bundle bundle) {
+
 
     }
 
