@@ -49,8 +49,6 @@ public class MyService extends Service {
         toast.show();
 //        buildGoogleApiClient();
 //        mGoogleApiClient.connect();
-        locator = new Locator(this);
-        locator.mGoogleApiClient.connect();
 
         Bundle extras = intent.getExtras();
         System.out.println( (String) extras.get("KEY1"));
@@ -60,6 +58,14 @@ public class MyService extends Service {
         //String message = String.valueOf(R.string.message);
 
         /* start alarm to periodically update location & contact server */
+        Intent alarmIntent = new Intent(c, SendPing.class);
+        pendingIntent = PendingIntent.getBroadcast(c, 0, alarmIntent, 0);
+        manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        System.out.println("ALARM STARTED");
+        int interval = 100;
+
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
 
         return Service.START_NOT_STICKY;
     }
