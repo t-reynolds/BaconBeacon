@@ -33,6 +33,7 @@ public class SendPing extends BroadcastReceiver{
             Toast.makeText(context, "Sending GPS", Toast.LENGTH_SHORT).show();
             System.out.println("SENDING GPS");
             locator = new Locator(context);
+            locator.mGoogleApiClient.connect();
             System.out.println(locator.mLastLocation);
 
         }
